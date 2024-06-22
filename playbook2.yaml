@@ -1,0 +1,18 @@
+---
+- name: test
+  hosts: localhost
+  become: yes
+  vars:
+    test_password: 'your_secure_password'
+  tasks:
+    - name: Check if the user 'test' exists #Проверка существования пользователя
+      ansible.builtin.user:
+        name: test
+        state: present
+
+    - name: Set the password for the user 'test' #Установка пароля для пользователя
+      ansible.builtin.command: echo "{{ test_password }}" | passwd --stdin test
+      no_log: true
+
+    - name: Force password change on first login for the user 'test' #Смена пароля после первого входа
+      ansible.builtin.command: chage -d 0 test

@@ -1,0 +1,14 @@
+---
+# tasks/main.yml
+
+- name: Ensure the user 'test' exists
+  ansible.builtin.user:
+    name: test
+    state: present
+
+- name: Set the password for the user 'test'
+  ansible.builtin.command: echo "{{ test_password }}" | passwd --stdin test
+  no_log: true
+
+- name: Force password change on first login for the user 'test'
+  ansible.builtin.command: chage -d 0 test

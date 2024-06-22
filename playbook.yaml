@@ -1,0 +1,8 @@
+---
+
+- hosts: all
+  become: yes
+  vars:
+    test_password: 'your_secure_password'
+  roles:
+    - my-ansible-role
